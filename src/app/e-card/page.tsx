@@ -91,7 +91,7 @@ END:VCARD`;
     const vCardData = `BEGIN:VCARD
 VERSION:3.0
 FN:${eCard.contact.name}
-ORG:${person.role}
+ORG:${eCard.contact.name}
 TITLE:${person.role}
 EMAIL:${eCard.contact.email}
 TEL:${eCard.contact.phone}
