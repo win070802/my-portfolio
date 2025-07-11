@@ -4,13 +4,20 @@ import { Projects } from "@/components/work/Projects";
 import { Mailchimp } from "@/components";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  const metadata = Meta.generate({
     title: work.title,
     description: work.description,
     baseURL: baseURL,
     image: `/api/og/generate?title=${encodeURIComponent(work.title)}`,
     path: work.path,
   });
+  
+  return {
+    ...metadata,
+    alternates: {
+      canonical: `${baseURL}${work.path}`,
+    },
+  };
 }
 
 export default function Work() {

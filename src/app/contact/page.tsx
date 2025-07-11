@@ -7,13 +7,20 @@ import { baseURL, about, person, contact } from "@/resources";
 import { ContactForm } from "@/components";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  const metadata = Meta.generate({
     title: contact.title,
     description: contact.description,
     baseURL: baseURL,
     image: `/api/og/generate?title=${encodeURIComponent(contact.title)}`,
     path: contact.path,
   });
+  
+  return {
+    ...metadata,
+    alternates: {
+      canonical: `${baseURL}${contact.path}`,
+    },
+  };
 }
 
 export default function Contact() {

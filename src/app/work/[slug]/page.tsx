@@ -3,7 +3,7 @@ import { getPosts } from "@/utils/utils";
 import { Meta, Schema, AvatarGroup, Button, Column, Flex, Heading, Media, Text } from "@once-ui-system/core";
 import { baseURL, about, person, work } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
-import { ScrollToHash, CustomMDX } from "@/components";
+import { ScrollToHash, CustomMDX, Breadcrumbs } from "@/components";
 import { Metadata } from "next";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
@@ -26,13 +26,20 @@ export async function generateMetadata({
 
   if (!post) return {};
 
-  return Meta.generate({
+  const metadata = Meta.generate({
     title: post.metadata.title,
     description: post.metadata.summary,
     baseURL: baseURL,
     image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
     path: `${work.path}/${post.slug}`,
   });
+  
+  return {
+    ...metadata,
+    alternates: {
+      canonical: `${baseURL}${work.path}/${post.slug}`,
+    },
+  };
 }
 
 export default async function Project({
@@ -70,6 +77,7 @@ export default async function Project({
         }}
       />
       <Column maxWidth="xs" gap="16">
+        <Breadcrumbs />
         <Button data-border="rounded" href="/work" variant="tertiary" weight="default" size="s" prefixIcon="chevronLeft">
           Projects
         </Button>
@@ -80,7 +88,7 @@ export default async function Project({
           priority
           aspectRatio="16 / 9"
           radius="m"
-          alt="image"
+          alt={`${post.metadata.title} - Project showcase image showing main features and interface`}
           src={post.metadata.images[0]}
         />
       )}
