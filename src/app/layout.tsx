@@ -44,6 +44,19 @@ export default async function RootLayout({
       )}
     >
       <head>
+        {/* Preload critical resources */}
+        <link rel="preload" href="/images/gallery/avatar-2.jpeg" as="image" type="image/jpeg" />
+        <link rel="preload" href={`${baseURL}/api/og/generate?title=${encodeURIComponent(home.title)}`} as="image" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Language and locale meta tags */}
+        <meta httpEquiv="content-language" content="en,vi" />
+        <link rel="alternate" hrefLang="en" href={`${baseURL}`} />
+        <link rel="alternate" hrefLang="vi" href={`${baseURL}`} />
+        <link rel="alternate" hrefLang="x-default" href={`${baseURL}`} />
+        
         {/* Mobile theme color meta tags - will be updated dynamically */}
         <meta name="theme-color" content="#000000" />
         
@@ -59,6 +72,17 @@ export default async function RootLayout({
         {/* Android specific meta tags */}
         <meta name="mobile-web-app-capable" content="yes" />
         
+        {/* Additional SEO meta tags */}
+        <meta name="author" content="Tran Minh Khoi" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="format-detection" content="telephone=yes" />
+        
+        {/* Security meta tags */}
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="X-Frame-Options" content="DENY" />
+        <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
@@ -216,6 +240,86 @@ export default async function RootLayout({
             `,
           }}
         />
+        
+        {/* Web Vitals monitoring for performance optimization */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                if ('web-vitals' in window || typeof window === 'undefined') return;
+                
+                // Simple Web Vitals tracking
+                function sendToAnalytics(metric) {
+                  if (typeof gtag !== 'undefined') {
+                    gtag('event', metric.name, {
+                      value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+                      event_category: 'Web Vitals',
+                      event_label: metric.id,
+                      non_interaction: true,
+                    });
+                  }
+                  console.log('Web Vitals:', metric.name, Math.round(metric.value), 'ms');
+                }
+                
+                // Track CLS (Cumulative Layout Shift)
+                let clsValue = 0;
+                let clsEntries = [];
+                const cls = new PerformanceObserver((entryList) => {
+                  for (const entry of entryList.getEntries()) {
+                    if (!entry.hadRecentInput) {
+                      clsValue += entry.value;
+                      clsEntries.push(entry);
+                    }
+                  }
+                });
+                
+                try {
+                  cls.observe({type: 'layout-shift', buffered: true});
+                } catch (e) {}
+                
+                // Track LCP (Largest Contentful Paint)
+                const lcp = new PerformanceObserver((entryList) => {
+                  const entries = entryList.getEntries();
+                  const lastEntry = entries[entries.length - 1];
+                  sendToAnalytics({
+                    name: 'LCP',
+                    value: lastEntry.startTime,
+                    id: 'lcp-' + Date.now()
+                  });
+                });
+                
+                try {
+                  lcp.observe({type: 'largest-contentful-paint', buffered: true});
+                } catch (e) {}
+                
+                // Track FID (First Input Delay)
+                const fid = new PerformanceObserver((entryList) => {
+                  for (const entry of entryList.getEntries()) {
+                    sendToAnalytics({
+                      name: 'FID',
+                      value: entry.processingStart - entry.startTime,
+                      id: 'fid-' + Date.now()
+                    });
+                  }
+                });
+                
+                try {
+                  fid.observe({type: 'first-input', buffered: true});
+                } catch (e) {}
+                
+                // Send CLS when page is about to unload
+                window.addEventListener('beforeunload', () => {
+                  sendToAnalytics({
+                    name: 'CLS',
+                    value: clsValue,
+                    id: 'cls-' + Date.now()
+                  });
+                });
+              })();
+            `,
+          }}
+        />
+        
         <Analytics />
         <OrganizationSchema />
       </head>

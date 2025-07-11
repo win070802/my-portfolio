@@ -11,13 +11,59 @@ import {
   Text,
   Tag,
 } from "@once-ui-system/core";
-import { person, contact, social, newsletter } from "@/resources";
+import { person, contact, social, newsletter, baseURL } from "@/resources";
 import { Mailchimp } from "@/components";
 import { trackContactForm, trackExternalLink } from "@/utils/analytics";
 
 export function ContactForm() {
+  // FAQ Schema for better SEO
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What services does Tran Minh Khoi offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "I offer Mobile App Development (React Native), Web Development (React.js, Next.js, Vue.js), Backend Development (Node.js, Laravel), UI/UX Design (Figma), Database Design & Optimization (MySQL, PostgreSQL), SEO Optimization, IT Support, Office 365 Administration, and Graphic Design (Photoshop, Illustrator, After Effects, Canva)."
+        }
+      },
+      {
+        "@type": "Question", 
+        "name": "How can I contact Tran Minh Khoi?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can contact me via email at contact@tranminhkhoi.dev, connect on LinkedIn, or call me directly. I typically respond within 1-2 business days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Tran Minh Khoi located?",
+        "acceptedAnswer": {
+          "@type": "Answer", 
+          "text": "I'm based in Ho Chi Minh City, Vietnam (GMT+7) and am open to remote work and international collaborations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Tran Minh Khoi available for new projects?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, I'm currently available for freelance projects and full-time opportunities. I typically respond within 1-2 business days to discuss potential opportunities."
+        }
+      }
+    ]
+  };
+
   return (
     <>
+      {/* FAQ Schema for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      
       <Heading marginBottom="l" variant="display-strong-s">
         {contact.intro.title}
       </Heading>

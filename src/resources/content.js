@@ -289,42 +289,42 @@ const gallery = {
   images: [
     {
       src: "/images/gallery/horizontal-1.jpg",
-      alt: "image",
+      alt: "Professional workspace setup with modern design elements - Tran Minh Khoi portfolio",
       orientation: "horizontal",
     },
     {
       src: "/images/gallery/horizontal-2.jpg",
-      alt: "image",
+      alt: "Creative development environment showcasing modern web technologies",
       orientation: "horizontal",
     },
     {
       src: "/images/gallery/horizontal-3.jpg",
-      alt: "image",
+      alt: "Mobile app development workspace with multiple devices and coding setup",
       orientation: "horizontal",
     },
     {
       src: "/images/gallery/horizontal-4.jpg",
-      alt: "image",
+      alt: "UI/UX design process with Figma mockups and design system components",
       orientation: "horizontal",
     },
     {
       src: "/images/gallery/vertical-1.jpg",
-      alt: "image",
+      alt: "Professional portrait of Tran Minh Khoi - Mobile & Web Developer",
       orientation: "vertical",
     },
     {
       src: "/images/gallery/vertical-2.jpg",
-      alt: "image",
+      alt: "Close-up of coding session with React Native development",
       orientation: "vertical",
     },
     {
       src: "/images/gallery/vertical-3.jpg",
-      alt: "image",
+      alt: "Office setup featuring dual monitors and modern development tools",
       orientation: "vertical",
     },
     {
       src: "/images/gallery/vertical-4.jpg",
-      alt: "image",
+      alt: "Creative brainstorming session with design sketches and wireframes",
       orientation: "vertical",
     },
   ],

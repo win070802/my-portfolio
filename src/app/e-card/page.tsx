@@ -8,10 +8,14 @@ import {
   Heading,
   Text,
   Schema,
+  Meta,
 } from "@once-ui-system/core";
 import { baseURL, about, person, eCard } from "@/resources";
 import { useState, useEffect, useRef } from "react";
 import QRCode from "qrcode";
+
+// Since this is a client component, we can't export generateMetadata directly
+// We'll handle SEO through the Schema component and meta tags in the head
 
 export default function ECard() {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
