@@ -62,10 +62,10 @@ const home = {
     display: true,
     title: (
       <>
-        Featured project: <strong className="ml-4">MK Widget Card</strong>
+        Featured project: <strong className="ml-4">Vivora Property Management</strong>
       </>
     ),
-    href: "/projects/mk-widget-ecard",
+    href: "/projects/vivora-property-management",
   },
   subline: (
     <>
